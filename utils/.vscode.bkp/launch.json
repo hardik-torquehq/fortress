@@ -8,10 +8,10 @@
             "name": "Launch Package",
             "type": "go",
             "request": "launch",
-            "mode": "debug",
-            "program": "${workspaceFolder}/blockchain_server/blockchain_server.go",
-            "args": ["-port", "9000"]  
+            "mode": "auto",
+            "program": "${workspaceRoot}/main.go",
+            "args": ["-port", "8080", "-gateway", "http://localhost:9000"]
         }
-       
+        
     ]
 }
