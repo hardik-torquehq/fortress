@@ -1,24 +1,76 @@
 # docker-compose.yml
 version: '3.8'
 services:
-  blockchain_server:
+  blockchain_server0:
     build:
       context: .
       dockerfile: Dockerfile.blockchain_server
+      args:
+        - BLOCKCHAIN_SERVER_PORT=${BLOCKCHAIN_SERVER_0_PORT}
     ports:
-      - 9000:9000
+      - ${BLOCKCHAIN_SERVER_0_PORT}:${BLOCKCHAIN_SERVER_0_PORT}
     networks:
       vpcbr:
-        ipv4_address: 172.28.0.1
-  wallet:
+        ipv4_address: ${BLOCKCHAIN_SERVER_0_IP}
+  blockchain_server1:
+    build:
+      context: .
+      dockerfile: Dockerfile.blockchain_server
+      args:
+        - BLOCKCHAIN_SERVER_PORT=${BLOCKCHAIN_SERVER_1_PORT}
+    ports:
+      - ${BLOCKCHAIN_SERVER_1_PORT}:${BLOCKCHAIN_SERVER_1_PORT}
+    networks:
+      vpcbr:
+        ipv4_address: ${BLOCKCHAIN_SERVER_1_IP}
+  blockchain_server2:
+    build:
+      context: .
+      dockerfile: Dockerfile.blockchain_server
+      args:
+        - BLOCKCHAIN_SERVER_PORT=${BLOCKCHAIN_SERVER_2_PORT}
+    ports:
+      - ${BLOCKCHAIN_SERVER_2_PORT}:${BLOCKCHAIN_SERVER_2_PORT}
+    networks:
+      vpcbr:
+        ipv4_address: ${BLOCKCHAIN_SERVER_2_IP}
+  blockchain_server3:
+    build:
+      context: .
+      dockerfile: Dockerfile.blockchain_server
+      args:
+        - BLOCKCHAIN_SERVER_PORT=${BLOCKCHAIN_SERVER_3_PORT}
+    ports:
+      - ${BLOCKCHAIN_SERVER_3_PORT}:${BLOCKCHAIN_SERVER_3_PORT}
+    networks:
+      vpcbr:
+        ipv4_address: ${BLOCKCHAIN_SERVER_3_IP}
+  wallet0:
     build:
       context: .
       dockerfile: Dockerfile.wallet
+      args:
+        - WALLET_ENGINE_PORT=${WALLET_ENGINE_0_PORT}
+        - BLOCKCHAIN_SERVER_IP=${BLOCKCHAIN_SERVER_0_IP}
+        - BLOCKCHAIN_SERVER_PORT=${BLOCKCHAIN_SERVER_0_PORT}
     ports:
-      - 8080:8080
+      - ${WALLET_ENGINE_0_PORT}:${WALLET_ENGINE_0_PORT}
     networks:
      vpcbr:
-        ipv4_address: 172.28.0.2
+        ipv4_address: ${WALLET_ENGINE_0_IP}
+  wallet1:
+    build:
+      context: .
+      dockerfile: Dockerfile.wallet
+      args:
+        - WALLET_ENGINE_PORT=${WALLET_ENGINE_1_PORT}
+        - BLOCKCHAIN_SERVER_IP=${BLOCKCHAIN_SERVER_1_IP}
+        - BLOCKCHAIN_SERVER_PORT=${BLOCKCHAIN_SERVER_1_PORT}
+    ports:
+      - ${WALLET_ENGINE_1_PORT}:${WALLET_ENGINE_1_PORT}
+    networks:
+     vpcbr:
+        ipv4_address: ${WALLET_ENGINE_1_IP}
 networks:
   vpcbr:
     driver: bridge
